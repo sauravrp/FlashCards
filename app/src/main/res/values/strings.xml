@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Flash Card App</string>
+    <string name="retry_button">Retry</string>
+    <string name="error_message">Error occurred. Please try again</string>
+    <string name="type_label">Type:</string>
+    <string name="empty_message">No Users found</string>
+    <string name="avatar">avatar image</string>
+
+    <string name="summary_activity_title">Summary</string>
+
+    <string name="summary_locale_count">View %1$d Locales</string>
+    <string name="flash_card_count">View %1$d Flash Cards</string>
+
+</resources>
