@@ -47,7 +47,7 @@ class LocaleViewModel(private val flashCardRepository: FlashCardRepository) : Vi
                 .subscribe({
                            fetchLocales()
                 }, {
-                    mutableViewState.value = LocaleViewModel.ViewState.Error(it)
+                    mutableViewState.value = ViewState.Error(it)
                 })
                 .also {
             compositeDisposable.add(it)

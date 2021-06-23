@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.takehome.sauravrp.repository.FlashCardRepository
 import com.takehome.sauravrp.viewmodels.AddCardViewModel
-import com.takehome.sauravrp.viewmodels.LocaleViewModel
 
 open class AddCardViewModelFactory(
     private val flashCardRepository: FlashCardRepository

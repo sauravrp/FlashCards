@@ -9,7 +9,7 @@ import com.takehome.sauravrp.databinding.FlashCardItemViewBinding
 import com.takehome.sauravrp.helpers.FlashCardDiffResultCallback
 import com.takehome.sauravrp.viewmodels.FlashCard
 
-class FlashListAdapter(private val flashCardSelectionListener: FlashListAdapter.FlashCardSelectionListener) :
+class FlashListAdapter(private val flashCardSelectionListener: FlashCardSelectionListener) :
     ListAdapter<FlashCard, FlashListAdapter.FlashCardViewHolder>(FlashCardDiffResultCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FlashCardViewHolder {

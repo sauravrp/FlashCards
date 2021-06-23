@@ -8,7 +8,7 @@ import com.takehome.sauravrp.databinding.FlashContentItemViewBinding
 import com.takehome.sauravrp.helpers.FlashContentDiffResultCallback
 import com.takehome.sauravrp.viewmodels.FlashContentWithLocale
 
-class FlashContentAdapter() :
+class FlashContentAdapter :
     ListAdapter<FlashContentWithLocale, FlashContentAdapter.FlashContentViewHolder>(
         FlashContentDiffResultCallback()
     ) {

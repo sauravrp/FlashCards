@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "Directory"
+rootProject.name = "FlashCard"

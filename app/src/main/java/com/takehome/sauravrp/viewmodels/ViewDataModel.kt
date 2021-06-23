@@ -2,7 +2,6 @@ package com.takehome.sauravrp.viewmodels
 
 import androidx.room.*
 
-
 @Entity(tableName = "flash_card")
 data class FlashCard(
     @PrimaryKey val flashCardUUID: String,
@@ -62,41 +61,3 @@ data class FlashContentWithLocale(
     val localeID: String,
     val localeName: String
 )
-
-
-//@Entity(primaryKeys = ["flashCardUUID", "contentUUID"])
-//data class FlashCardsWithContent(
-//        val flashCardUUID: String,
-//        @ColumnInfo(index = true)
-//        val contentUUID: String
-//)
-
-//data class FlashCardsWithContent(
-//        @Embedded val flashCard: FlashCard,
-//        @Relation(
-//                parentColumn = "flashCardUUID",
-//                entityColumn = "flashID"
-//        )
-//        val content: List<FlashContent>
-//)
-
-//data class FlashCardsWithContentAndLocale(
-//        @Embedded val flashCard: FlashCard,
-//        @Relation(
-//                entity = FlashContent::class,
-//                parentColumn = "flashCardUUID",
-//                entityColumn = "flashID"
-//        )
-//        val content: List<FlashContentWithLocale>
-//)
-
-//data class FlashCardWithContents(
-//        @Embedded val flashCard: FlashCard,
-//        @Relation(
-//                entity = FlashContentRelationship::class,
-//                parentColumn = "flashCardUUID",
-//                entityColumn = "contentUUID"
-////                associateBy = Junction(FlashContentRelationship::class)
-//        )
-//        val contentWithLocale: List<FlashContentWithLocale>
-//)

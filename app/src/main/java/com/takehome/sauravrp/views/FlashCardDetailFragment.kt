@@ -43,7 +43,7 @@ class FlashCardDetailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val _binding = FlashDetailViewBinding.inflate(inflater, container, false)
         binding = _binding
         return _binding.root

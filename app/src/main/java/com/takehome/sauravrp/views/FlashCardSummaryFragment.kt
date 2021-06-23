@@ -42,7 +42,7 @@ class FlashCardSummaryFragment : Fragment(), FlashListAdapter.FlashCardSelection
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val _binding = FlashSummaryViewBinding.inflate(inflater, container, false)
         binding = _binding
         return _binding.root
@@ -70,6 +70,7 @@ class FlashCardSummaryFragment : Fragment(), FlashListAdapter.FlashCardSelection
                         showFlashCards(it.data)
                     }
                 }
+                else -> {}
             }
         })
     }

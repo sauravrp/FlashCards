@@ -8,7 +8,7 @@ import com.takehome.sauravrp.databinding.LocaleItemViewBinding
 import com.takehome.sauravrp.helpers.LocaleResultDiffCallback
 import com.takehome.sauravrp.viewmodels.Locale
 
-class LocaleAdapter() :
+class LocaleAdapter :
         ListAdapter<Locale, LocaleAdapter.LocaleViewHolder>(LocaleResultDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocaleViewHolder {
