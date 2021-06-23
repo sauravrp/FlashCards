@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.takehome.sauravrp.DirectoryComponentProvider
+import com.takehome.sauravrp.R
 import com.takehome.sauravrp.databinding.LocaleActivityBinding
 import com.takehome.sauravrp.di.components.DaggerActivityComponent
 import com.takehome.sauravrp.viewmodels.LocaleViewModel
@@ -30,6 +31,8 @@ class LocaleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = LocaleActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setTitle(R.string.add_locale)
 
         binding.apply {
             localeListView.apply {

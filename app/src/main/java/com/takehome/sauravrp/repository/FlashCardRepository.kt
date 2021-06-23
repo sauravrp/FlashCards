@@ -1,12 +1,8 @@
 package com.takehome.sauravrp.repository
 
-import androidx.room.Insert
 import com.takehome.sauravrp.db.AppDatabase
 import com.takehome.sauravrp.di.scopes.DirectoryScope
-import com.takehome.sauravrp.viewmodels.FlashCard
-import com.takehome.sauravrp.viewmodels.FlashContent
-import com.takehome.sauravrp.viewmodels.FlashContentWithLocaleRef
-import com.takehome.sauravrp.viewmodels.Locale
+import com.takehome.sauravrp.viewmodels.*
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
@@ -16,15 +12,15 @@ class FlashCardRepository @Inject constructor(
     private val database: AppDatabase
 ) {
     fun getLocaleCount(): Single<Int> {
-        return database.flashCardDao().getLocalesCount()
+        return database.localeDao().getLocalesCount()
     }
 
     fun getLocales(): Single<List<Locale>> {
-        return database.flashCardDao().getLocales()
+        return database.localeDao().getLocales()
     }
 
     fun addLocale(locale: Locale): Completable {
-        return database.flashCardDao().insertLocale(locale)
+        return database.localeDao().insertLocale(locale)
     }
 
     fun getFlashCardsCount(): Single<Int> {
@@ -35,19 +31,29 @@ class FlashCardRepository @Inject constructor(
         return database.flashCardDao().getFlashCards()
     }
 
+    fun getFlashCardContents(flashCard: FlashCard): Single<List<FlashContentWithLocale>> {
+        return database.cardContentDao().getFlashCards(flashCard.flashCardUUID)
+    }
+
     fun insertFlashCard(flashCard: FlashCard): Completable =
         database.flashCardDao().insertFlashCard(flashCard)
 
-    fun insertFlashContent(flashContent: Map<Locale, FlashContent>): Completable =
-        database.flashCardDao().insertFlashContent(*flashContent.values.toTypedArray()).andThen {
-            val refData = flashContent.map { entry ->
-                FlashContentWithLocaleRef(
-                    localeUUID = entry.key.localeUUID,
-                    contentUUID = entry.value.contentUUID
-                )
-            }
-            database.flashCardDao().insertFlashContentWithLocaleRef(*refData.toTypedArray())
+    fun insertFlashContent(
+        flashCard: FlashCard,
+        flashContent: Map<Locale, FlashContent>
+    ): Completable {
+        val ref = flashContent.map { entry ->
+            FlashWithContentAndLocalRelationship(
+                flashID = flashCard.flashCardUUID,
+                localeID = entry.key.localeUUID,
+                contentID = entry.value.contentUUID
+            )
         }
 
+        return database.cardContentDao().insertContent(*flashContent.values.toTypedArray())
+            .andThen (
+                database.relationshipDao().insertRelationship(*ref.toTypedArray())
+            )
+    }
 }
 

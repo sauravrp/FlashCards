@@ -127,7 +127,7 @@ class UserDirectoryActivityTest {
         sut.visible()
 
         mutableMockedUsersLiveData.value =
-            FlashCardViewModel.ViewState.Success(emptyList())
+            FlashCardViewModel.ViewState.FlashCards(emptyList())
 
         onView(withId(R.id.list_view)).check(matches(withEffectiveVisibility(Visibility.GONE)))
         onView(withId(R.id.progress)).check(matches(withEffectiveVisibility(Visibility.GONE)))
@@ -153,7 +153,7 @@ class UserDirectoryActivityTest {
         sut.visible()
 
         mutableMockedUsersLiveData.value =
-            FlashCardViewModel.ViewState.Success(
+            FlashCardViewModel.ViewState.FlashCards(
                 listOf(
                     TestDataHelper.userDto().toUser()
                 )

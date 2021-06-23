@@ -25,6 +25,7 @@ class AddCardViewModel(private val flashCardRepository: FlashCardRepository) : V
 
     private val titleMap = mutableMapOf<Locale, String>()
     private val bodyMap = mutableMapOf<Locale, String>()
+    private var cachedLocales : List<Locale> = emptyList()
 
     sealed class ViewState {
         class Error(val error: Throwable) : ViewState()
@@ -43,6 +44,11 @@ class AddCardViewModel(private val flashCardRepository: FlashCardRepository) : V
         mutableViewState
     }
 
+    val viewEvent: LiveData<ViewEvent> by lazy {
+        isSaveEnabled()
+        mutableViewEvent
+    }
+
     private fun fetchLocales() {
         flashCardRepository
             .getLocales()
@@ -52,6 +58,7 @@ class AddCardViewModel(private val flashCardRepository: FlashCardRepository) : V
                 mutableViewState.value = ViewState.Loading
             }
             .subscribe({
+                cachedLocales = it
                 mutableViewState.value = ViewState.Success(it)
             }, {
                 mutableViewState.value = ViewState.Error(it)
@@ -64,14 +71,33 @@ class AddCardViewModel(private val flashCardRepository: FlashCardRepository) : V
 
     fun setCardName(title: String) {
         cardName = title
+        isSaveEnabled()
     }
 
     fun addTitle(title: String, locale: Locale) {
         titleMap[locale] = title
+        isSaveEnabled()
     }
 
     fun addBody(body: String, locale: Locale) {
         bodyMap[locale] = body
+        isSaveEnabled()
+    }
+
+    private fun isSaveEnabled() {
+        var allFilled = true
+        if(cachedLocales.isEmpty()) {
+            allFilled = false
+        }
+
+        cachedLocales.map { locale ->
+            allFilled = allFilled
+                    && cardName.isNotBlank()
+                    && (titleMap[locale]?.isNotBlank() ?: false)
+                    && (bodyMap[locale]?.isNotBlank() ?: false)
+        }
+
+        mutableViewEvent.value = ViewEvent.SaveEnabled(allFilled)
     }
 
     fun save() {
@@ -84,15 +110,13 @@ class AddCardViewModel(private val flashCardRepository: FlashCardRepository) : V
             contentMap[locale] =
                 FlashContent(
                     UUID.randomUUID().toString(),
-                    flashCard.flashCardUUID,
                     titleMap[locale] ?: "",
                     bodyMap[locale] ?: ""
                 )
-
         }
 
         flashCardRepository.insertFlashCard(flashCard).andThen(
-            flashCardRepository.insertFlashContent(contentMap)
+            flashCardRepository.insertFlashContent(flashCard, contentMap)
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -110,6 +134,4 @@ class AddCardViewModel(private val flashCardRepository: FlashCardRepository) : V
         super.onCleared()
         compositeDisposable.clear()
     }
-
-
 }

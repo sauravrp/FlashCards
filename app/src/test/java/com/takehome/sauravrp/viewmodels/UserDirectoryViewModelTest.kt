@@ -84,8 +84,8 @@ class UserDirectoryViewModelTest {
         val slot = slot<FlashCardViewModel.ViewState>()
         verify { mockedObserver.onChanged(capture(slot)) }
 
-        assertThat(slot.captured).isInstanceOf(FlashCardViewModel.ViewState.Success::class.java)
-        assertThat((slot.captured as FlashCardViewModel.ViewState.Success).data)
+        assertThat(slot.captured).isInstanceOf(FlashCardViewModel.ViewState.FlashCards::class.java)
+        assertThat((slot.captured as FlashCardViewModel.ViewState.FlashCards).data)
             .isEqualTo(data)
     }
 

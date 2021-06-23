@@ -1,50 +1,66 @@
 package com.takehome.sauravrp.viewmodels
 
-import android.os.Parcelable
 import androidx.room.*
-import kotlinx.android.parcel.Parcelize
 
 
-@Parcelize
-@Entity
+@Entity(tableName = "flash_card")
 data class FlashCard(
-        @PrimaryKey val flashCardUUID: Int,
-        val name: String
-) : Parcelable
-
-
-@Parcelize
-@Entity
-data class Locale(
-        @PrimaryKey val localeUUID: String,
-        val localeName: String
-) : Parcelable
-
-@Parcelize
-@Entity
-data class FlashContent(
-        @PrimaryKey val contentUUID: String,
-        val flashID: String,
-        val title: String,
-        val body: String
-) : Parcelable
-
-// room specific relationship entities
-@Entity(primaryKeys = ["localeUUID", "contentUUID"])
-data class FlashContentWithLocaleRef(
-        val localeUUID: String,
-        @ColumnInfo(index = true)
-        val contentUUID: String
+    @PrimaryKey val flashCardUUID: String,
+    val name: String
 )
 
+
+@Entity(tableName = "locale")
+data class Locale(
+    @PrimaryKey val localeUUID: String,
+    val localeName: String
+)
+
+@Entity(tableName = "flash_content")
+data class FlashContent(
+    @PrimaryKey val contentUUID: String,
+    val title: String,
+    val body: String
+)
+
+// room specific relationship entities
+@Entity(
+    tableName = "flash_content_locale_ref",
+    foreignKeys = [
+        ForeignKey(
+            entity = FlashCard::class,
+            parentColumns = ["flashCardUUID"],
+            childColumns = ["flashID"],
+            onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = Locale::class,
+            parentColumns = ["localeUUID"],
+            childColumns = ["localeID"],
+            onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = FlashContent::class,
+            parentColumns = ["contentUUID"],
+            childColumns = ["contentID"],
+            onDelete = ForeignKey.CASCADE
+        ),
+    ]
+)
+data class FlashWithContentAndLocalRelationship(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val flashID: String,
+    val localeID: String,
+    val contentID: String
+)
+
+@DatabaseView("SELECT flash_content.contentUUID as contentID, flash_content.title as title, flash_content.body as body, locale.localeUUID as localeID, locale.localeName as localeName FROM flash_content INNER JOIN flash_content_locale_ref ON flash_content.contentUUID = flash_content_locale_ref.contentID INNER JOIN locale ON flash_content_locale_ref.localeID = locale.localeUUID")
 data class FlashContentWithLocale(
-        @Embedded val content: FlashContent,
-        @Relation(
-                parentColumn = "contentUUID",
-                entityColumn = "localeUUID",
-                associateBy = Junction(FlashContentWithLocaleRef::class)
-        )
-        val locale: Locale
+    val contentID: String,
+    val title: String,
+    val body: String,
+    val localeID: String,
+    val localeName: String
 )
 
 
@@ -64,15 +80,15 @@ data class FlashContentWithLocale(
 //        val content: List<FlashContent>
 //)
 
-data class FlashCardsWithContentAndLocale(
-        @Embedded val flashCard: FlashCard,
-        @Relation(
-                entity = FlashContent::class,
-                parentColumn = "flashCardUUID",
-                entityColumn = "flashID"
-        )
-        val content: List<FlashContentWithLocale>
-)
+//data class FlashCardsWithContentAndLocale(
+//        @Embedded val flashCard: FlashCard,
+//        @Relation(
+//                entity = FlashContent::class,
+//                parentColumn = "flashCardUUID",
+//                entityColumn = "flashID"
+//        )
+//        val content: List<FlashContentWithLocale>
+//)
 
 //data class FlashCardWithContents(
 //        @Embedded val flashCard: FlashCard,

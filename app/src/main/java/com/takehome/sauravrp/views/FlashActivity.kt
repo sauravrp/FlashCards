@@ -6,7 +6,6 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.switchmaterial.SwitchMaterial
 import com.takehome.sauravrp.DirectoryComponentProvider
 import com.takehome.sauravrp.R
 import com.takehome.sauravrp.databinding.FlashActivityViewBinding
@@ -24,13 +23,13 @@ class FlashActivity : AppCompatActivity() {
 
     private lateinit var model: FlashCardViewModel
 
-    private var addMenu: MenuItem? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FlashActivityViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+
+        setTitle(R.string.flash_cards)
 
         DaggerActivityComponent
             .factory()
@@ -44,16 +43,7 @@ class FlashActivity : AppCompatActivity() {
             when(event) {
                 is FlashCardViewModel.ViewEvent.ShowDetails -> navigateToDetail()
             }
-
         })
-    }
-
-    private fun navigateToAddCard() {
-//        /        supportFragmentManager
-//            .beginTransaction()
-//            .replace(binding.fragmentContainer.id, EmployeeDetailFragment())
-//            .addToBackStack(null)
-//            .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -63,17 +53,25 @@ class FlashActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.add_card) {
-            startActivity(Intent(this@FlashActivity, AddCardActivity::class.java))
+            startActivityForResult(Intent(this@FlashActivity, AddCardActivity::class.java), AddCardActivity.REQUEST_CODE)
         }
         return true
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode) {
+             AddCardActivity.REQUEST_CODE -> if(resultCode == RESULT_OK) {
+                 model.fetchFlashCards()
+             }
+        }
+    }
 
-    fun navigateToDetail() {
-//        supportFragmentManager
-//            .beginTransaction()
-//            .replace(binding.fragmentContainer.id, EmployeeDetailFragment())
-//            .addToBackStack(null)
-//            .commit()
+    private fun navigateToDetail() {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(binding.fragmentContainer.id, FlashCardDetailFragment())
+            .addToBackStack(null)
+            .commit()
     }
 }

@@ -15,7 +15,8 @@ class FlashCardViewModel(
     sealed class ViewState {
         class Error(val error: Throwable) : ViewState()
         object Loading : ViewState()
-        class Success(val data: List<FlashCard>) : ViewState()
+        class FlashCards(val data: List<FlashCard>) : ViewState()
+        class FlashContents(val data: List<FlashContentWithLocale>) : ViewState()
     }
 
     sealed class ViewEvent {
@@ -45,7 +46,25 @@ class FlashCardViewModel(
                     mutableViewState.value = ViewState.Loading
                 }
                 .subscribe({ result ->
-                    mutableViewState.value = ViewState.Success(data = result)
+                    mutableViewState.value = ViewState.FlashCards(data = result)
+                }, { error ->
+                    mutableViewState.value = ViewState.Error(error = error)
+                }).also {
+                    disposable = it
+                }
+    }
+
+    fun fetchFlashCardContents(flashCard: FlashCard) {
+        disposable?.dispose()
+        flashCardRepository
+                .getFlashCardContents(flashCard)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe {
+                    mutableViewState.value = ViewState.Loading
+                }
+                .subscribe({ result ->
+                    mutableViewState.value = ViewState.FlashContents(data = result)
                 }, { error ->
                     mutableViewState.value = ViewState.Error(error = error)
                 }).also {

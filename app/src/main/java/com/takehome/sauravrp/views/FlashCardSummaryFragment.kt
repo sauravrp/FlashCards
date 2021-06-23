@@ -63,7 +63,7 @@ class FlashCardSummaryFragment : Fragment(), FlashListAdapter.FlashCardSelection
             when (it) {
                 is FlashCardViewModel.ViewState.Error -> showError(it.error)
                 FlashCardViewModel.ViewState.Loading -> showLoading()
-                is FlashCardViewModel.ViewState.Success ->  {
+                is FlashCardViewModel.ViewState.FlashCards ->  {
                     if(it.data.isEmpty()) {
                         showEmpty()
                     } else {

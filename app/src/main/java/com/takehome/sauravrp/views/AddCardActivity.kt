@@ -1,28 +1,26 @@
 package com.takehome.sauravrp.views
 
-import android.graphics.drawable.ClipDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.takehome.sauravrp.DirectoryComponentProvider
+import com.takehome.sauravrp.R
 import com.takehome.sauravrp.databinding.CardContentAddViewBinding
 import com.takehome.sauravrp.databinding.CardContentItemViewBinding
-import com.takehome.sauravrp.databinding.LocaleActivityBinding
 import com.takehome.sauravrp.di.components.DaggerActivityComponent
 import com.takehome.sauravrp.viewmodels.AddCardViewModel
-import com.takehome.sauravrp.viewmodels.LocaleViewModel
 import com.takehome.sauravrp.viewmodels.factory.AddCardViewModelFactory
-import com.takehome.sauravrp.viewmodels.factory.LocaleViewModelFactory
-import com.takehome.sauravrp.views.adapter.LocaleAdapter
 import timber.log.Timber
 import javax.inject.Inject
 
 class AddCardActivity : AppCompatActivity() {
+
+    companion object {
+        const val REQUEST_CODE = 1
+    }
+
     private lateinit var binding: CardContentAddViewBinding
 
     private lateinit var model: AddCardViewModel
@@ -34,6 +32,8 @@ class AddCardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = CardContentAddViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setTitle(R.string.add_flash_card)
 
         DaggerActivityComponent
                 .factory()
@@ -49,6 +49,27 @@ class AddCardActivity : AppCompatActivity() {
                 is AddCardViewModel.ViewState.Success -> showSuccess(state)
             }
         })
+
+        model.viewEvent.observe(this, { event ->
+            when (event) {
+                AddCardViewModel.ViewEvent.SaveCompleted -> saveComplete()
+                is AddCardViewModel.ViewEvent.SaveEnabled -> enableSave(event.enabled)
+                is AddCardViewModel.ViewEvent.SaveFailed -> showSaveError(event.error)
+            }
+        })
+    }
+
+    private fun saveComplete() {
+        setResult(RESULT_OK)
+        finish()
+    }
+
+    private fun showSaveError(error: Throwable) {
+        Timber.e(error.toString())
+    }
+
+    private fun enableSave(enabled: Boolean) {
+        binding.saveButton.isEnabled = enabled
     }
 
     private fun showSuccess(state: AddCardViewModel.ViewState.Success) {
@@ -58,7 +79,7 @@ class AddCardActivity : AppCompatActivity() {
                 model.save()
             }
 
-            flashCardName.addTextChangedListener(object: TextWatcher {
+            flashCardName.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
                     s: CharSequence?,
                     start: Int,
@@ -83,7 +104,7 @@ class AddCardActivity : AppCompatActivity() {
                )
                addBinding.apply {
                    localeText.text = locale.localeName
-                   titleText.addTextChangedListener(object: TextWatcher {
+                   titleText.addTextChangedListener(object : TextWatcher {
                        override fun beforeTextChanged(
                            s: CharSequence?,
                            start: Int,
@@ -105,7 +126,7 @@ class AddCardActivity : AppCompatActivity() {
                        }
                    })
 
-                   bodyText.addTextChangedListener(object: TextWatcher {
+                   bodyText.addTextChangedListener(object : TextWatcher {
                        override fun beforeTextChanged(
                            s: CharSequence?,
                            start: Int,
