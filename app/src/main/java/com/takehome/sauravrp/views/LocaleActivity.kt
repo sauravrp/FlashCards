@@ -13,7 +13,7 @@ import com.takehome.sauravrp.DirectoryComponentProvider
 import com.takehome.sauravrp.databinding.LocaleActivityBinding
 import com.takehome.sauravrp.di.components.DaggerActivityComponent
 import com.takehome.sauravrp.viewmodels.LocaleViewModel
-import com.takehome.sauravrp.viewmodels.LocaleViewModelFactory
+import com.takehome.sauravrp.viewmodels.factory.LocaleViewModelFactory
 import com.takehome.sauravrp.views.adapter.LocaleAdapter
 import timber.log.Timber
 import javax.inject.Inject

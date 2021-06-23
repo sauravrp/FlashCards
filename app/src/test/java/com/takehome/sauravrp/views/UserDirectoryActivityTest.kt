@@ -38,7 +38,7 @@ import org.robolectric.annotation.Config
 )
 class UserDirectoryActivityTest {
 
-    private lateinit var sut: ActivityController<UserDirectoryActivity>
+    private lateinit var sut: ActivityController<FlashActivity>
 
     private var mutableMockedUsersLiveData =
         MutableLiveData<FlashCardViewModel.ViewState>()
@@ -82,7 +82,7 @@ class UserDirectoryActivityTest {
             mockDirectoryComponent = component
         }
 
-        sut = buildActivity(UserDirectoryActivity::class.java).create()
+        sut = buildActivity(FlashActivity::class.java).create()
 
     }
 
@@ -134,7 +134,7 @@ class UserDirectoryActivityTest {
 
         onView(withId(R.id.no_results_container)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
         onView(withId(R.id.no_results_message)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-        onView(withId(R.id.no_results_message)).check(matches(withText(R.string.empty_message)))
+        onView(withId(R.id.no_results_message)).check(matches(withText(R.string.flash_card_empty_message)))
 
         onView(withId(R.id.retry_button)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
             .perform(

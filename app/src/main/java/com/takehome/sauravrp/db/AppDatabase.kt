@@ -5,11 +5,13 @@ import com.takehome.sauravrp.viewmodels.*
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
-@Database(entities = [FlashCard::class,
-    Locale::class,
-    FlashContent::class,
-    FlashContentWithLocaleRef::class
-], exportSchema = false, version = 1)
+@Database(
+    entities = [FlashCard::class,
+        Locale::class,
+        FlashContent::class,
+        FlashContentWithLocaleRef::class
+    ], exportSchema = false, version = 1
+)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun flashCardDao(): FlashCardDao
 }
@@ -26,7 +28,13 @@ interface FlashCardDao {
     fun insertLocale(locale: Locale): Completable
 
     @Insert
-    fun insertFlashCard(flashCard: FlashCard)
+    fun insertFlashCard(flashCard: FlashCard): Completable
+
+    @Insert
+    fun insertFlashContent(vararg flashContent: FlashContent): Completable
+
+    @Insert
+    fun insertFlashContentWithLocaleRef(vararg flashContentWithLocaleRef: FlashContentWithLocaleRef): Completable
 
     @Transaction
     @Query("SELECT * FROM FlashCard")

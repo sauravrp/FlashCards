@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Entity
 data class FlashCard(
-        @PrimaryKey val flashCardUUID: String,
+        @PrimaryKey val flashCardUUID: Int,
         val name: String
 ) : Parcelable
 
@@ -26,7 +26,7 @@ data class FlashContent(
         @PrimaryKey val contentUUID: String,
         val flashID: String,
         val title: String,
-        val message: String
+        val body: String
 ) : Parcelable
 
 // room specific relationship entities

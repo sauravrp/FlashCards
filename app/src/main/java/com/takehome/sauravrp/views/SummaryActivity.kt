@@ -10,7 +10,7 @@ import com.takehome.sauravrp.R
 import com.takehome.sauravrp.databinding.SummaryActivityBinding
 import com.takehome.sauravrp.di.components.DaggerActivityComponent
 import com.takehome.sauravrp.viewmodels.SummaryViewModel
-import com.takehome.sauravrp.viewmodels.SummaryViewModelFactory
+import com.takehome.sauravrp.viewmodels.factory.SummaryViewModelFactory
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -36,6 +36,10 @@ class SummaryActivity : AppCompatActivity() {
         binding.apply {
             localeCount.setOnClickListener {
                 startActivity(Intent(this@SummaryActivity, LocaleActivity::class.java))
+            }
+
+            flashCardCount.setOnClickListener {
+                startActivity(Intent(this@SummaryActivity, FlashActivity::class.java))
             }
         }
 

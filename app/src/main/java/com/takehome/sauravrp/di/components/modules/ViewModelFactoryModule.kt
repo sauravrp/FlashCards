@@ -2,9 +2,10 @@ package com.takehome.sauravrp.di.components.modules
 
 import com.takehome.sauravrp.di.scopes.DirectoryScope
 import com.takehome.sauravrp.repository.FlashCardRepository
-import com.takehome.sauravrp.viewmodels.LocaleViewModelFactory
-import com.takehome.sauravrp.viewmodels.SummaryViewModelFactory
-import com.takehome.sauravrp.viewmodels.UserDirectoryViewModelFactory
+import com.takehome.sauravrp.viewmodels.factory.AddCardViewModelFactory
+import com.takehome.sauravrp.viewmodels.factory.LocaleViewModelFactory
+import com.takehome.sauravrp.viewmodels.factory.SummaryViewModelFactory
+import com.takehome.sauravrp.viewmodels.factory.FlashCardViewModelFactory
 import dagger.Module
 import dagger.Provides
 
@@ -13,8 +14,8 @@ class ViewModelFactoryModule  {
 
     @Provides
     @DirectoryScope
-    fun providesUserDirectoryViewModelFactory(flashCardRepository: FlashCardRepository) : UserDirectoryViewModelFactory {
-        return UserDirectoryViewModelFactory(flashCardRepository)
+    fun providesUserDirectoryViewModelFactory(flashCardRepository: FlashCardRepository) : FlashCardViewModelFactory {
+        return FlashCardViewModelFactory(flashCardRepository)
     }
 
     @Provides
@@ -27,6 +28,13 @@ class ViewModelFactoryModule  {
     @DirectoryScope
     fun providesLocaleViewModelFactory(flashCardRepository: FlashCardRepository) : LocaleViewModelFactory {
         return LocaleViewModelFactory(flashCardRepository)
+    }
+
+
+    @Provides
+    @DirectoryScope
+    fun providesAddCardViewModelFactory(flashCardRepository: FlashCardRepository) : AddCardViewModelFactory {
+        return AddCardViewModelFactory(flashCardRepository)
     }
 
 }

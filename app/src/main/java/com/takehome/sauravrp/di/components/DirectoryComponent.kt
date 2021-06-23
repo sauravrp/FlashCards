@@ -2,9 +2,10 @@ package com.takehome.sauravrp.di.components
 
 import com.takehome.sauravrp.di.components.modules.ViewModelFactoryModule
 import com.takehome.sauravrp.di.scopes.DirectoryScope
-import com.takehome.sauravrp.viewmodels.LocaleViewModelFactory
-import com.takehome.sauravrp.viewmodels.SummaryViewModelFactory
-import com.takehome.sauravrp.viewmodels.UserDirectoryViewModelFactory
+import com.takehome.sauravrp.viewmodels.factory.AddCardViewModelFactory
+import com.takehome.sauravrp.viewmodels.factory.LocaleViewModelFactory
+import com.takehome.sauravrp.viewmodels.factory.SummaryViewModelFactory
+import com.takehome.sauravrp.viewmodels.factory.FlashCardViewModelFactory
 import dagger.Component
 
 @DirectoryScope
@@ -14,10 +15,10 @@ import dagger.Component
 )
 interface DirectoryComponent {
 
-    fun userDirectoryViewModelFactory(): UserDirectoryViewModelFactory
+    fun flashCardViewModelFactory(): FlashCardViewModelFactory
     fun summaryViewModelFactory(): SummaryViewModelFactory
-
     fun localeViewModelFactory(): LocaleViewModelFactory
+    fun addCardViewModelFactory(): AddCardViewModelFactory
 
     @Component.Factory
     interface Factory {

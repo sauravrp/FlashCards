@@ -3,7 +3,7 @@
     <string name="retry_button">Retry</string>
     <string name="error_message">Error occurred. Please try again</string>
     <string name="type_label">Type:</string>
-    <string name="empty_message">No Users found</string>
+    <string name="flash_card_empty_message">No flash cards found</string>
     <string name="avatar">avatar image</string>
 
     <string name="summary_activity_title">Summary</string>
@@ -14,5 +14,17 @@
     <string name="locale_add">Add Locale</string>
     <string name="locale_hint">Type locale here</string>
     <string name="locale_title">Supported Locales:</string>
+
+    <string name="add_card">Add Card</string>
+
+    <string name="locale">Locale:</string>
+
+    <string name="card_title_hint">Add card name</string>
+
+
+    <string name="title_hint">Add title</string>
+    <string name="body_hint">Add body</string>
+    <string name="save_button">Save</string>
+
 
 </resources>
