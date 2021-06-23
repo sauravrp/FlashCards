@@ -11,4 +11,8 @@
     <string name="summary_locale_count">View %1$d Locales</string>
     <string name="flash_card_count">View %1$d Flash Cards</string>
 
+    <string name="locale_add">Add Locale</string>
+    <string name="locale_hint">Type locale here</string>
+    <string name="locale_title">Supported Locales:</string>
+
 </resources>

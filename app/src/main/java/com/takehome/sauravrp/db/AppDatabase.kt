@@ -23,7 +23,7 @@ interface FlashCardDao {
 //    fun insertAllUsers(vararg users: FlashCard): Completable
 
     @Insert
-    fun insertLocale(locale: Locale)
+    fun insertLocale(locale: Locale): Completable
 
     @Insert
     fun insertFlashCard(flashCard: FlashCard)

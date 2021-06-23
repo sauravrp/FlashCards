@@ -1,5 +1,6 @@
 package com.takehome.sauravrp.views
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -32,6 +33,12 @@ class SummaryActivity : AppCompatActivity() {
                 .create((applicationContext as DirectoryComponentProvider).directoryComponent())
                 .inject(this)
 
+        binding.apply {
+            localeCount.setOnClickListener {
+                startActivity(Intent(this@SummaryActivity, LocaleActivity::class.java))
+            }
+        }
+
         model = ViewModelProvider(this, modelFactory).get(SummaryViewModel::class.java)
 
         model.viewState.observe(this, { state ->
@@ -41,7 +48,11 @@ class SummaryActivity : AppCompatActivity() {
                 is SummaryViewModel.ViewState.Success -> showSuccess(state)
             }
         })
+    }
 
+    override fun onStart() {
+        super.onStart()
+        model.fetchCount()
     }
 
     private fun showSuccess(state: SummaryViewModel.ViewState.Success) {

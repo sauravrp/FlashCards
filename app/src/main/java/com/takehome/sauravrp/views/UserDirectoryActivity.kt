@@ -1,9 +1,12 @@
 package com.takehome.sauravrp.views
 
+import android.graphics.drawable.ClipDrawable.HORIZONTAL
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.takehome.sauravrp.DirectoryComponentProvider
 import com.takehome.sauravrp.R
 import com.takehome.sauravrp.databinding.UserDirectoryViewBinding
@@ -11,6 +14,7 @@ import com.takehome.sauravrp.di.components.DaggerActivityComponent
 import com.takehome.sauravrp.viewmodels.FlashCard
 import com.takehome.sauravrp.viewmodels.FlashCardViewModel
 import com.takehome.sauravrp.viewmodels.UserDirectoryViewModelFactory
+import com.takehome.sauravrp.views.adapter.LocaleAdapter
 import com.takehome.sauravrp.views.adapter.UserDirectoryAdapter
 import timber.log.Timber
 import javax.inject.Inject
@@ -30,6 +34,12 @@ class UserDirectoryActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = UserDirectoryViewBinding.inflate(layoutInflater)
+
+        binding.listView.apply {
+            layoutManager = LinearLayoutManager(context)
+            addItemDecoration(DividerItemDecoration(context, HORIZONTAL))
+            adapter = LocaleAdapter()
+        }
     }
 
     override fun cardItemSelected(user: FlashCard) {
