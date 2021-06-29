@@ -1,6 +1,6 @@
 ## Context
 
-BigSpring is a global learning platform, and has learners consuming educational content in a [wide variety of languages](https://en.wikipedia.org/wiki/Languages_of_India#Official_languages). One of the types of educational content we deliver is a [flashcard](https://en.wikipedia.org/wiki/Flashcard). Currently, content is developed in a single language. As [literacy is an issue](https://en.wikipedia.org/wiki/Literacy_in_India) in several parts of the world, ensuring that content is fully [localized](https://en.wikipedia.org/wiki/Language_localisation) into regional languages would increase overall platform engagement in addition to improving individual learning outcomes.
+[Redacted] is a global learning platform, and has learners consuming educational content in a [wide variety of languages](https://en.wikipedia.org/wiki/Languages_of_India#Official_languages). One of the types of educational content we deliver is a [flashcard](https://en.wikipedia.org/wiki/Flashcard). Currently, content is developed in a single language. As [literacy is an issue](https://en.wikipedia.org/wiki/Literacy_in_India) in several parts of the world, ensuring that content is fully [localized](https://en.wikipedia.org/wiki/Language_localisation) into regional languages would increase overall platform engagement in addition to improving individual learning outcomes.
 
 ## Requirements
 
@@ -27,7 +27,7 @@ There are no requirements about specific implementation technologies or framewor
 
 ## User Stories
 
-- As a content administrator, I want to create a flash card and localize it into some of the BigSpring “supported” languages.
+- As a content administrator, I want to create a flash card and localize it into some of the [Redacted] “supported” languages.
 - As a content administrator, I want to add a new “supported” language in order to localize new content into new regions that the business is expanding into.
 
 ## Deliverables

@@ -1,23 +1,59 @@
-Welcome to the BigSpring Case-Study! 
+# Overview
+## Context
 
-This project is designed to serve as a representative model of the end-to-end engineering process that we follow at BigSpring. 
+[Redacted] is a global learning platform, and has learners consuming educational content in a [wide variety of languages](https://en.wikipedia.org/wiki/Languages_of_India#Official_languages). One of the types of educational content we deliver is a [flashcard](https://en.wikipedia.org/wiki/Flashcard). Currently, content is developed in a single language. As [literacy is an issue](https://en.wikipedia.org/wiki/Literacy_in_India) in several parts of the world, ensuring that content is fully [localized](https://en.wikipedia.org/wiki/Language_localisation) into regional languages would increase overall platform engagement in addition to improving individual learning outcomes.
 
-The project has the following phases:
+## Requirements
 
-1. You receive access to this repository, which contains this README and a [specification document](spec.md) that describes the project.
-2. We meet for 10m - 15m to discuss the specification document and resolve any questions.
-3. You independently work on code that aims to fulfill the specification document.
-4. We expect a reasonable solution to take at least 5 hours. You may spend more time as needed. This is the only technical round we have. Make sure to highlight areas of your depth and any bredth. 
-5. We meet for 1.5h to discuss the code you've written in an open-ended way: particular implementation choices you made, changing requirements, etc.
+Design and implement a Flash Card content management system. This can be an iOS, Android or web app. This will be a “backend” app, used by content administrators in order to begin developing a localized library of flash card content.
 
-Goals of this project:
+Our content library will have a concept of “supported” or “targeted” languages: Given the entire universe of languages, we will only aim to localize our content into a subset in order to support the most popular languages within the regions that BigSpring’s users are located in.
 
-1. We see how you work within a representative environment on representative problems.
-2. We see how you think and write code.
+In Scope Features:
+- Add a new “supported” language
+- Create a flash card
+- Localize flash card into all “supported” languages (acceptable if happens as part of creation)
+- View localized flash cards
 
-Non-goals of this project:
+Out of Scope Features:
+- Update and Deletion of flash cards (we’re very good at localization!)
+- If a new “supported” language is added, any existing flash cards localized into the previous set of “supported” languages can remain as-is, i.e. there is no need to propagate the update.
 
-1. We do not expect code that fulfills all aspects of the spec! Please do not spend more than a day of your time on this. The intent is to understand how you think about problems and write code, not whether you can implement a spec end to end in limited time.
-2. We do not expect a production-ready code base. Please feel free to "cut corners" where appropriate: data persistence, infrastructure, and polished front-end design are all areas that could be ignored (or, focused on, if that's your thing!).
 
-Reach out to arun@bigspring.io with any questions you have.
+## User Stories
+
+- As a content administrator, I want to create a flash card and localize it into some of the BigSpring “supported” languages.
+- As a content administrator, I want to add a new “supported” language in order to localize new content into new regions that the business is expanding into.
+
+## Deliverables
+
+Commit your implementation directly to this repository. Your implementation should contain documentation on how to execute the project.
+
+# Focus Area
+My primary focus was on the architecture and the data flow. 
+For UI, my focus was on the phone
+
+# Architecture
+The architecture utilizes Model-View-Intent pattern. Dagger is used for dependency injection 
+to separate out the components into the application component and feature component. 
+This enables scaling of the feature components, allows testing as well as reusability of 
+lower level components.
+The project takes advantage of LiveData for binding presentation layer with the view model 
+and RxJava for fetching data from the network.
+
+# Data Persistence
+Data Persistence is utilized using Room database.
+
+# Copied in Code or Copied in Dependencies
+The project utilizes various 3rd party libraries such as RxJava, Stetho, Timber etc.
+
+# Areas for Improvement
+- Error State and Loading State is still not fully implemented in most screens.
+- Error recovery could be better.
+- Code could use more comments.
+- UI can be more polished.
+- Skipped testing due to time limit. For previous testing samples of my work, see https://github.com/sauravrp/githubusers.
+- More unit tests, instrumented tests, db test, UI tests and integration tests could be implemented.
+
+# Tools Used
+Android Studio 4.1.1, used Pixel 2 API 27 emulator for all of testing
